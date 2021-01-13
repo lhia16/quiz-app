@@ -24,6 +24,24 @@ app.get("/", (req, res) => {
     res.send("Hello from Nodejs");
 })
 
+app.post("/quizsetup/catagory", (req, res) => {
+    //this is where we can pass all the data to mongodb
+
+    //always must send a response (send feed back to frontend - succes/failure)
+    res.json({
+        response:"You Selected: " + req.body.catagory
+    })
+})
+
+app.post("/quizsetup/difficulty", (req, res) => {
+    //this is where we can pass all the data to mongodb
+
+    //always must send a response (send feed back to frontend - succes/failure)
+    res.json({
+        response:"You Selected: " + req.body.difficulty
+    })
+})
+
 app.listen(port, () => {
     console.log(`Listening to port ${port}`);
 });
