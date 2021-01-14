@@ -5,6 +5,8 @@ const port = 5000;
 const path = require('path');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const User = require('./models/user');
+const Result = require('./models/result');
 
 dotenv.config({path: './.env'});
 
@@ -24,16 +26,21 @@ app.get("/", (req, res) => {
     res.send("Hello from Nodejs");
 })
 
-app.post("/quizsetup/catagory", (req, res) => {
-    //this is where we can pass all the data to mongodb
+app.post("/quizsetup/category", async (req, res) => {
 
     //always must send a response (send feed back to frontend - succes/failure)
     res.json({
-        response:"You Selected: " + req.body.catagory
+        response:"You Selected: " + req.body.category
     })
 })
 
 app.post("/quizsetup/difficulty", (req, res) => {
+    //this is where we can pass all the data to mongodb
+    console.log("difficulty");
+    //always must send a response (send feed back to frontend - succes/failure)
+})
+
+app.post("/quiz", (req, res) => {
     //this is where we can pass all the data to mongodb
 
     //always must send a response (send feed back to frontend - succes/failure)
