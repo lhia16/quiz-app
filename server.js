@@ -29,7 +29,7 @@ app.use(express.json({ extended: false }));
 app.use(cors());
 
 
-app.get('/', auth.isLoggedIn, async (req, res) => {
+app.get('/', async (req, res) => {
     // res.send("Hello from Nodejs");
    
     if(req.userFound && req.userFound.Admin) {
@@ -62,8 +62,7 @@ app.post('/register', async (req, res) => {
     })
 });
 
-
-app.get("/login",  auth.isLoggedIn, (req, res) => {
+app.get("/login", (req, res) => {
     res.render('login');
 });
 
