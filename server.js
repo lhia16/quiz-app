@@ -64,6 +64,19 @@ app.post('/register', async (req, res) => {
     })
 });
 
+app.post('/quizcomplete', async (req, res) => {
+    await Result.create({
+        //need to update this to get the proper data from the cookie?
+        user: "60000fbf7e42d612c87ca2d5",
+        time: req.body.time,
+        score: req.body.score,
+    })
+    //always must send a response (send feed back to frontend - succes/failure)
+    res.json({
+        response: "Score registered Succesfully!"
+    })
+});
+
 
 // app.get("/login", (req, res) => {
 //     res.render('login');

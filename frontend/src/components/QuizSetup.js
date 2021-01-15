@@ -1,6 +1,5 @@
 import './QuizSetup.css';
 import Quiz from './Quiz';
-import Timer from './Timer';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
@@ -118,7 +117,6 @@ const QuizSetup = () => {
     } else if (quizQuestions.length > 0) {
         return (
             <div>
-                <Timer />
                 <Quiz questions={quizQuestions} shuffle={shuffle} />
             </div>
         )
