@@ -56,6 +56,7 @@ const Quiz = (props) => {
         console.log(answers);
         let score = checkAnswers(answers);
         console.log(score);
+
         sendData(score);
 
         return (

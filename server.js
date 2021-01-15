@@ -64,6 +64,12 @@ app.post('/register', async (req, res) => {
     })
 });
 
+
+
+// app.get("/login", (req, res) => {
+//     res.render('login');
+// });
+
 app.post('/quizcomplete', async (req, res) => {
     await Result.create({
         //need to update this to get the proper data from the cookie?
