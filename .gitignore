@@ -23,3 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 
 .env
+
+frontend/.eslintcache
+package-lock.json
+frontend/package-lock.json
