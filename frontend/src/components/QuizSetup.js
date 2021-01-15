@@ -122,6 +122,8 @@ const QuizSetup = () => {
                 <Timer />
                 <Quiz questions={quizQuestions} shuffle={shuffle} />
 
+
+
             </div>
         )
     } else {

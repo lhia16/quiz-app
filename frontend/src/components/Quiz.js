@@ -1,5 +1,6 @@
 import './Quiz.css';
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const Quiz = (props) => {
 
@@ -29,11 +30,35 @@ const Quiz = (props) => {
         return score;
     }
 
+    const sendData = async (score) => {
+
+        //not sure if we will need to pass the name/user data in as should be able to retrive from cookie
+        let name = "Sam";
+        let time = 130;
+        const body = {
+            name: name,
+            score: score,
+            time: time,
+        }
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const response = await axios.post("/quizcomplete", body, config);
+        console.log(response.data.response);
+    }
+
 
     if (question + 1 > 10) {
         console.log(answers);
         let score = checkAnswers(answers);
         console.log(score);
+
+        sendData(score);
+
         return (
             <div>
                 <h1>Quiz complete here are your results!</h1>
