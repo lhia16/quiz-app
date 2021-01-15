@@ -29,7 +29,7 @@ app.use(express.json({ extended: false }));
 app.use(cors());
 
 
-app.get('/', auth.isLoggedIn, async (req, res) => {
+app.get('/', async (req, res) => {
     // res.send("Hello from Nodejs");
    
     if(req.userFound && req.userFound.Admin) {
@@ -40,9 +40,11 @@ app.get('/', auth.isLoggedIn, async (req, res) => {
     
     const usersDB = await user.find();
 
-    res.render('index', {
-        users: user
-    });
+    // res.render('index', {
+    //     users: usersDB
+    // });
+
+    res.send("Hello from Nodejs");
 });
 
 app.post('/register', async (req, res) => {
@@ -63,9 +65,9 @@ app.post('/register', async (req, res) => {
 });
 
 
-app.get("/login",  auth.isLoggedIn, (req, res) => {
-    res.render('login');
-});
+// app.get("/login", (req, res) => {
+//     res.render('login');
+// });
 
 app.post('/login', async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
@@ -112,6 +114,9 @@ app.post("/quizsetup/difficulty", (req, res) => {
     //this is where we can pass all the data to mongodb
     console.log("difficulty");
     //always must send a response (send feed back to frontend - succes/failure)
+    res.json({
+        response:"You Selected: " + req.body.difficulty
+    })
 })
 
 app.post("/quiz", (req, res) => {
