@@ -11,11 +11,12 @@ const QuizSetup = () => {
     const [difficultySelected, setDifficultySelected] = useState(false);
     const [category, setCategory] = useState("");
     const [quizQuestions, setQuizQuestions] = useState([]);
+    const [answer, setAnswer] = useState("");
+    const [question, setQuestion] = useState(1);
 
     const fetchData = async () => {
         //body/headers not required when accessing own backend
         const response = await axios.get('https://opentdb.com/api_category.php')
-        console.log(response.data.trivia_categories);
         setCategories(response.data.trivia_categories);
     }
 
@@ -27,14 +28,12 @@ const QuizSetup = () => {
     const formHandler = async (event, page) => {
         //this prevents the reloading of the page
         event.preventDefault();
-        console.log(page);
         if (page === "category") {
             setCategorySelected(true);
         } else if (page === "difficulty") {
             setDifficultySelected(true);
             const response = await axios.get(`https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${selectedDifficulty}&type=multiple`)
             setQuizQuestions(response.data.results);
-            console.log(response.data.results);
         }
 
         //create a data object to pass through axios (like node)
@@ -56,32 +55,36 @@ const QuizSetup = () => {
         setbackendResponse(response.data.response);
     }
 
+    const answerHandler = (event) => {
+        event.preventDefault();
+        console.log(answer);
+    }
+
     const shuffle = (array) => {
         var currentIndex = array.length, temporaryValue, randomIndex;
-      
+
         // While there remain elements to shuffle...
         while (0 !== currentIndex) {
-      
-          // Pick a remaining element...
-          randomIndex = Math.floor(Math.random() * currentIndex);
-          currentIndex -= 1;
-      
-          // And swap it with the current element.
-          temporaryValue = array[currentIndex];
-          array[currentIndex] = array[randomIndex];
-          array[randomIndex] = temporaryValue;
-        }
-      
-        return array;
-      }
 
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            // And swap it with the current element.
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+
+        return array;
+    }
     if (!categorySelected) {
         return (
             <div>
                 <h1>Quiz Setup</h1>
                 <div className="categories">
                     {
-                        shuffle(categories).slice(0,9).map((category, i) => {
+                        shuffle(categories).slice(0, 9).map((category, i) => {
                             //categories with extra long names causing issues with the size of the box
                             if (category.name.includes("Entertainment")) {
                                 category.name = category.name.replace("Entertainment: ", "")
@@ -122,19 +125,20 @@ const QuizSetup = () => {
                         let newArray = [question.correct_answer, question.incorrect_answers[0], question.incorrect_answers[1], question.incorrect_answers[2]];
                         let shuffledArray = shuffle(newArray);
                         return (
-                            <div key={i}>
+                            <div key={i} className="question" id={"question" + i}>
                                 <h2>{question.question}</h2>
-                                <form>
-                                    <button type="submit">{shuffledArray[0]}</button>
-                                    <button type="submit">{shuffledArray[1]}</button>
-                                    <button type="submit">{shuffledArray[2]}</button>
-                                    <button type="submit">{shuffledArray[3]}</button>
+                                <form className="answers" onSubmit={(e) => answerHandler(e)}>
+                                    <button className="answer" id="answer1" type="submit" value={shuffledArray[0]} onClick={(e) => { setAnswer(e.target.value) }}>{shuffledArray[0]}</button>
+                                    <button className="answer" id="answer2" type="submit" value={shuffledArray[1]} onClick={(e) => { setAnswer(e.target.value) }}>{shuffledArray[1]}</button>
+                                    <button className="answer" id="answer3" type="submit" value={shuffledArray[2]} onClick={(e) => { setAnswer(e.target.value) }}>{shuffledArray[2]}</button>
+                                    <button className="answer" id="answer4" type="submit" value={shuffledArray[3]} onClick={(e) => { setAnswer(e.target.value) }}>{shuffledArray[3]}</button>
                                 </form>
                             </div>
                         )
                     })
                 }
             </div>
+
         )
     }
 
