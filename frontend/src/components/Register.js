@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Register.css';
+import React from 'react';
 
 const Register = () => {
     const [name, setName] = useState("");

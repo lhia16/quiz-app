@@ -12,6 +12,7 @@ const cookieParser = require('cookie-parser');
 // const auth = require('./middlewares/auth');
 const { find } = require('./models/user');
 const user = require('./models/user');
+const Result = require('./models/result');
 
 dotenv.config({ path: './.env' });
 
@@ -98,6 +99,29 @@ app.post('/login', async (req, res) => {
 // });
 
 
+
+app.post("/quizsetup/category", async (req, res) => {
+
+    //always must send a response (send feed back to frontend - succes/failure)
+    res.json({
+        response:"You Selected: " + req.body.category
+    })
+})
+
+app.post("/quizsetup/difficulty", (req, res) => {
+    //this is where we can pass all the data to mongodb
+    console.log("difficulty");
+    //always must send a response (send feed back to frontend - succes/failure)
+})
+
+app.post("/quiz", (req, res) => {
+    //this is where we can pass all the data to mongodb
+
+    //always must send a response (send feed back to frontend - succes/failure)
+    res.json({
+        response:"You Selected: " + req.body.difficulty
+    })
+})
 
 app.listen(port, () => {
     console.log(`Listening to port ${port}`);
