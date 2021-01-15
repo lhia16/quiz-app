@@ -1,6 +1,7 @@
 import './QuizSetup.css';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import Timer from "./Timer"
 
 const QuizSetup = () => {
     const [categories, setCategories] = useState([]);
@@ -120,7 +121,8 @@ const QuizSetup = () => {
         return (
             <div>
                 <h1>Quiz</h1>
-                {
+                <Timer />
+                {   
                     quizQuestions.map((question, i) => {
                         let newArray = [question.correct_answer, question.incorrect_answers[0], question.incorrect_answers[1], question.incorrect_answers[2]];
                         let shuffledArray = shuffle(newArray);
@@ -133,10 +135,13 @@ const QuizSetup = () => {
                                     <button className="answer" id="answer3" type="submit" value={shuffledArray[2]} onClick={(e) => { setAnswer(e.target.value) }}>{shuffledArray[2]}</button>
                                     <button className="answer" id="answer4" type="submit" value={shuffledArray[3]} onClick={(e) => { setAnswer(e.target.value) }}>{shuffledArray[3]}</button>
                                 </form>
+                                
                             </div>
                         )
                     })
-                }
+                }<div>
+                    
+                </div>
             </div>
 
         )

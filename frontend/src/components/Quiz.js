@@ -1,6 +1,7 @@
 import './Quiz.css';
 import React from 'react';
 
+
 const Quiz = () => {
     return (
         <div>
