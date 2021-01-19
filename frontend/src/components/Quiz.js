@@ -1,6 +1,7 @@
 import './Quiz.css';
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Quiz = (props) => {
 
@@ -30,11 +31,11 @@ const Quiz = (props) => {
         return score;
     }
 
-    const sendData = async (score) => {
+    const sendData = async (score, totalTime) => {
 
         //not sure if we will need to pass the name/user data in as should be able to retrive from cookie
         let name = "Sam";
-        let time = 130;
+        let time = totalTime;
         const body = {
             name: name,
             score: score,
@@ -57,12 +58,28 @@ const Quiz = (props) => {
         let score = checkAnswers(answers);
         console.log(score);
 
-        sendData(score);
+
+        //grab the time from the timer & stop timer
+        const timer = document.getElementsByClassName("Timer");
+        console.log(timer);
+        timer[0].style.visibility = "hidden";
+        console.log(timer[0].innerHTML)
+
+        let array = timer[0].innerHTML.split(":");
+        console.log(array);
+
+        let totalTime = parseInt(array[0]*60) + parseInt(array[1])
+        console.log(totalTime);
+
+        //convert in seconds
+        sendData(score, totalTime);
+        
 
         return (
             <div>
                 <h1>Quiz complete here are your results!</h1>
                 <h2>You scored: {score} out of 10</h2>
+                <button><Link to="/leaderboard">Leaderboard</Link></button>
             </div>
         )
     } else {

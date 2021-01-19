@@ -31,9 +31,9 @@ class Leaderboard extends Component {
       <div className="main">
         <h1>Leaderboard</h1>
         {/* Map through the already sorted array that lives in state */}
-        {scores.map((person) => {
+        {scores.map((person, i) => {
           return (
-            <div>
+            <div key={i}>
               <p>
                 {person.name} - {person.score} - {person.time}
               </p>
