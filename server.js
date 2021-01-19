@@ -63,6 +63,17 @@ app.post('/register', async (req, res) => {
     })
 });
 
+app.get("/getData", async (req, res) => {
+    //this is where we can pass all the data to mongodb
+    const results = await User.find()
+    console.log(results);
+    //always must send a response (send feed back to frontend - succes/failure)
+    res.json({
+        results: results
+    })
+});
+
+
 
 
 // app.get("/login", (req, res) => {
@@ -75,6 +86,15 @@ app.post('/quizcomplete', async (req, res) => {
         user: "60000fbf7e42d612c87ca2d5",
         time: req.body.time,
         score: req.body.score,
+    })
+
+    const user = await User.findById(({_id:"60000fbf7e42d612c87ca2d5"}))
+    let currentScore = user.totalScore;
+    let currentTime = user.totalTime;
+
+    await User.findByIdAndUpdate({_id:"60000fbf7e42d612c87ca2d5"},{
+        totalTime: currentTime + req.body.time,
+        totalScore: currentScore + req.body.score
     })
     //always must send a response (send feed back to frontend - succes/failure)
     res.json({

@@ -29,7 +29,7 @@ const Register = () => {
 
         setbackendResponse(response.data.response);
     }
-
+    
     return (
         <div>
             <h1>Register</h1>

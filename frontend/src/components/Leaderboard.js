@@ -1,47 +1,54 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from 'react';
 import "./Leaderboard.css";
 import axios from "axios";
 
-class Leaderboard extends Component {
+const Leaderboard = (props) => {
+
+  const [scores, setScores] = useState([]);
+  const [sortedScores, setsortedScores] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get("/getData")
+      setScores(response.data.results);
   
-  state = {
-    scores: [
-      { name: "Sam", score: 8, time: 120 },
-      { name: "Rose",score: 10,time: 140 },
-      { name: "Lhia", score: 5, time: 180 },
-      { name: "Mike", score: 5, time: 140 },
-      { name: "Dan", score: 10, time: 135 },
-    ],
-  };
+      orderScores(response.data.results);
+    }
+  
+    const orderScores = (scoreData) => {
+      let data = scoreData;
+  
+      let sorted = data.sort((a, b) => {
+        return b.totalScore - a.totalScore || a.totalTime - b.totalTime;
+      });
+      setsortedScores(sorted)
+    }
+
+    fetchData();
+  }, [])
+
+
 
   //Using component did mount here so that I can manipulate some data before I render it to the screen.
-  componentDidMount() {
-    //Take the data from state and store it in a variable so that I can manipulate it
-    let data = this.state.scores;
+  //Take the data from state and store it in a variable so that I can manipulate it
+  //I use this new sorted value and set it to state ready for the render
 
-    let sorted = data.sort((a, b)=> {
-      return b.score - a.score || a.time - b.time;
-    });
-    //I use this new sorted value and set it to state ready for the render
-    this.setState({ scores: sorted });
-  }
-  render() {
-    const { scores } = this.state;
-    return (
-      <div className="main">
-        <h1>Leaderboard</h1>
-        {/* Map through the already sorted array that lives in state */}
-        {scores.map((person, i) => {
-          return (
-            <div key={i}>
-              <p>
-                {person.name} - {person.score} - {person.time}
-              </p>
-            </div>
-          );
-        })}
-      </div>
-    );
-  }
-}
+  console.log(sortedScores);
+  return (
+    <div className="main">
+      <h1>Leaderboard</h1>
+      {/* Map through the already sorted array that lives in state */}
+      {scores.map((person, i) => {
+        return (
+          <div key={i}>
+            <p>
+              {person.name} - {person.totalScore} - {person.totalTime}
+            </p>
+          </div>
+        );
+      })}
+    </div>
+  )
+};
+
 export default Leaderboard;

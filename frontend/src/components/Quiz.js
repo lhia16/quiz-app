@@ -22,7 +22,7 @@ const Quiz = (props) => {
         props.questions.map((q, i) => {
             if(q.correct_answer === answers[i]){
                 console.log("correct");
-                score += 1;
+                score += 10;
             }else{
                 console.log("The correct answer is " + q.correct_answer);
             }
