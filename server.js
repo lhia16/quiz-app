@@ -10,7 +10,6 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const cookieParser = require('cookie-parser');
 // const auth = require('./middlewares/auth');
-const { find } = require('./models/user');
 const user = require('./models/user');
 const Result = require('./models/result');
 
