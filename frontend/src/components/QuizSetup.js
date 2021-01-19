@@ -1,9 +1,11 @@
 import './QuizSetup.css';
+import Quiz from './Quiz';
+import Timer from './Timer';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import Timer from "./Timer"
 
 const QuizSetup = () => {
+
     const [categories, setCategories] = useState([]);
     const [difficulty, setDifficulty] = useState(["easy", "medium", "hard"]);
     const [selectedDifficulty, setSelectedDifficulty] = useState("");
@@ -12,8 +14,7 @@ const QuizSetup = () => {
     const [difficultySelected, setDifficultySelected] = useState(false);
     const [category, setCategory] = useState("");
     const [quizQuestions, setQuizQuestions] = useState([]);
-    const [answer, setAnswer] = useState("");
-    const [question, setQuestion] = useState(1);
+
 
     const fetchData = async () => {
         //body/headers not required when accessing own backend
@@ -56,10 +57,7 @@ const QuizSetup = () => {
         setbackendResponse(response.data.response);
     }
 
-    const answerHandler = (event) => {
-        event.preventDefault();
-        console.log(answer);
-    }
+
 
     const shuffle = (array) => {
         var currentIndex = array.length, temporaryValue, randomIndex;
@@ -117,37 +115,22 @@ const QuizSetup = () => {
                 </div>
             </div>
         );
-    } else {
+    } else if (quizQuestions.length > 0) {
         return (
             <div>
-                <h1>Quiz</h1>
-                <Timer />
-                {   
-                    quizQuestions.map((question, i) => {
-                        let newArray = [question.correct_answer, question.incorrect_answers[0], question.incorrect_answers[1], question.incorrect_answers[2]];
-                        let shuffledArray = shuffle(newArray);
-                        return (
-                            <div key={i} className="question" id={"question" + i}>
-                                <h2>{question.question}</h2>
-                                <form className="answers" onSubmit={(e) => answerHandler(e)}>
-                                    <button className="answer" id="answer1" type="submit" value={shuffledArray[0]} onClick={(e) => { setAnswer(e.target.value) }}>{shuffledArray[0]}</button>
-                                    <button className="answer" id="answer2" type="submit" value={shuffledArray[1]} onClick={(e) => { setAnswer(e.target.value) }}>{shuffledArray[1]}</button>
-                                    <button className="answer" id="answer3" type="submit" value={shuffledArray[2]} onClick={(e) => { setAnswer(e.target.value) }}>{shuffledArray[2]}</button>
-                                    <button className="answer" id="answer4" type="submit" value={shuffledArray[3]} onClick={(e) => { setAnswer(e.target.value) }}>{shuffledArray[3]}</button>
-                                </form>
-                                
-                            </div>
-                        )
-                    })
-                }<div>
-                    
-                </div>
-            </div>
 
+                <Timer/>
+                <Quiz questions={quizQuestions} shuffle={shuffle} />
+
+
+
+            </div>
+        )
+    } else {
+        return (
+            <h1>Trying to load your quiz!</h1>
         )
     }
-
-
 }
 
 export default QuizSetup;

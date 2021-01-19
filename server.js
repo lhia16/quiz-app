@@ -10,7 +10,6 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const cookieParser = require('cookie-parser');
 // const auth = require('./middlewares/auth');
-const { find } = require('./models/user');
 const user = require('./models/user');
 const Result = require('./models/result');
 
@@ -29,7 +28,7 @@ app.use(express.json({ extended: false }));
 app.use(cors());
 
 
-app.get('/', auth.isLoggedIn, async (req, res) => {
+app.get('/', async (req, res) => {
     // res.send("Hello from Nodejs");
    
     if(req.userFound && req.userFound.Admin) {
@@ -40,9 +39,11 @@ app.get('/', auth.isLoggedIn, async (req, res) => {
     
     const usersDB = await user.find();
 
-    res.render('index', {
-        users: user
-    });
+    // res.render('index', {
+    //     users: usersDB
+    // });
+
+    res.send("Hello from Nodejs");
 });
 
 app.post('/register', async (req, res) => {
@@ -62,10 +63,49 @@ app.post('/register', async (req, res) => {
     })
 });
 
-
-app.get("/login",  auth.isLoggedIn, (req, res) => {
-    res.render('login');
+app.get("/getData", async (req, res) => {
+    //this is where we can pass all the data to mongodb
+    const results = await User.find()
+    console.log(results);
+    //always must send a response (send feed back to frontend - succes/failure)
+    res.json({
+        results: results
+    })
 });
+
+
+
+
+// app.get("/login", (req, res) => {
+//     res.render('login');
+// });
+
+app.post('/quizcomplete', async (req, res) => {
+    await Result.create({
+        //need to update this to get the proper data from the cookie?
+        user: "60000fbf7e42d612c87ca2d5",
+        time: req.body.time,
+        score: req.body.score,
+    })
+
+    const user = await User.findById(({_id:"60000fbf7e42d612c87ca2d5"}))
+    let currentScore = user.totalScore;
+    let currentTime = user.totalTime;
+
+    await User.findByIdAndUpdate({_id:"60000fbf7e42d612c87ca2d5"},{
+        totalTime: currentTime + req.body.time,
+        totalScore: currentScore + req.body.score
+    })
+    //always must send a response (send feed back to frontend - succes/failure)
+    res.json({
+        response: "Score registered Succesfully!"
+    })
+});
+
+
+// app.get("/login", (req, res) => {
+//     res.render('login');
+// });
 
 app.post('/login', async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
@@ -112,6 +152,9 @@ app.post("/quizsetup/difficulty", (req, res) => {
     //this is where we can pass all the data to mongodb
     console.log("difficulty");
     //always must send a response (send feed back to frontend - succes/failure)
+    res.json({
+        response:"You Selected: " + req.body.difficulty
+    })
 })
 
 app.post("/quiz", (req, res) => {
