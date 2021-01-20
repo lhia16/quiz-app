@@ -53,7 +53,7 @@ const Login = (props) => {
     return (
         <div>
             <h1>Login</h1>
-            <form onSubmit={formHandler}>
+            <form className="form" onSubmit={formHandler}>
                 
                 <label>User Name:</label><br />
                 <input type="text" name="userName" onChange={(e) => { setName(e.target.value) }}></input><br /><br />

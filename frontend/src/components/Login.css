@@ -1,0 +1,17 @@
+.form {
+    margin: auto;
+    width: 60%;
+    border: 3px solid #73AD21;
+    padding: 100px;
+
+
+}
+
+input {
+    text-align: left;
+    margin-left: 0;
+    font-size: large;
+    margin-bottom: 10px;
+    font-family: 'Kanit', sans-serif;
+
+}
