@@ -3,7 +3,13 @@
     width: 50%;
     /* border: 3px solid #73AD21; */
     padding: 50px;
+    border-radius: 10px;
+    /* height: 50%; */
+    text-align: center;
+    
 }
+
+
 
 .question {
     font-size: xx-large;
@@ -11,4 +17,6 @@
     width: 90%;
     padding: 10px;
     text-align: center;
+    padding-bottom: 30px;
 }
+

@@ -10,7 +10,7 @@
 
 .category{
     width: 33%;
-    height: 200px;
+    height: 150px;
 }
 
 .category button{
@@ -67,7 +67,8 @@ button {
     border: 1px solid rgba( 255, 255, 255, 0.18 );
     padding: 6px;
     outline: none;
-    margin-top: 15px;
+    /* margin-top: 15px; */
+
     
 }
   
@@ -87,5 +88,15 @@ button:hover {
         text-align: center;
         height: 100%;
 
+}
+
+.Timer {
+    color: white;
+    margin: auto;
+    width: 100%;
+    /* border: 10px solid #73AD21; */
+    padding: 10px;
+    text-align: center;
+    font-size: large;
 }
 
