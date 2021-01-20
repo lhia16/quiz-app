@@ -1,9 +1,18 @@
-.categories{
-    width: 700px;
+.categories {
+    /* width: 700px; */
     display: flex;
     flex-wrap: wrap;
+    margin: auto;
+    width: 50%;
+    border: 3px solid green;
+    padding: 10px;
 }
+/* .container {
+    background-image: url(../images/blueGradient.png);
+    background-attachment: fixed;
+    
 
+} */
 .category{
     width: 33%;
     height: 200px;
@@ -12,4 +21,86 @@
 .category button{
     width: 100%;
     height: 100%;
+}
+
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 12px;
+    font-size: 100%;
+    font-family: 'Kanit', sans-serif;
+    color: white;
+    height: 100%;
+    background-image: url(../images/blueGradient.png);
+    /* background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(113,9,121,1) 0%, rgba(0,212,255,1) 100%);
+    background-attachment: fixed;
+    */
+  }
+   
+
+h1 {
+    font-size: 70px;
+    margin: auto;
+    width: 90%;
+    /* border: 3px solid #73AD21; */
+    padding: 10px;
+    text-align: center;
+}
+
+h2 {
+    font-size: large;
+    margin: auto;
+    width: 90%;
+    padding: 10px;
+    text-align: center;
+}
+
+button {
+    margin-top: 2px;
+    border-radius: 12px;
+    border: 2px;
+    font-size: 30px;
+    font-family: 'Kanit', sans-serif;
+    color: white;
+    background: rgba( 155, 155, 155, 0.10 );
+    backdrop-filter: blur( 4.5px );
+    -webkit-backdrop-filter: blur( 4.5px );
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+    padding: 6px;
+    outline: none;
+    margin-top: 15px;
+}
+  
+button:hover {
+    background-color: rgb(109, 71, 169)
+
+}
+
+li {
+    display: inline;
+    color: white;
+  
+   
+}
+
+a:visited {
+    color: white
+}
+
+a:hover {
+    color: rgb(200, 199, 199);
+}
+
+a:link {
+    text-decoration: none;
+}
+
+li a {
+    padding: 10px;
+    
 }
