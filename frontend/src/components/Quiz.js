@@ -78,7 +78,7 @@ const Quiz = (props) => {
         return (
             <div>
                 <h1>Quiz complete here are your results!</h1>
-                <h2>You scored: {score} out of 10</h2>
+                <h2>You scored: {score} out of 100</h2>
                 <button><Link to="/leaderboard">Leaderboard</Link></button>
             </div>
         )
