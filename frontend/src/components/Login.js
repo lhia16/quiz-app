@@ -1,5 +1,5 @@
 import './Login.css';
-import React, { useState} from 'react';
+import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import Home from './Home';
 
@@ -10,6 +10,16 @@ const Login = (props) => {
     const [password, setPassword] = useState("");
     const [backendResponse, setbackendResponse] = useState();
     const [authenticated, setAuthenticated] = useState();
+
+    useEffect(() => {
+        checkAuth();
+    }, []);
+
+    const checkAuth = async () => {
+        const response = await axios.get('/isAuthd')
+        console.log(response)
+        setAuthenticated(response.data.authenticated);
+    }
 
 
     const formHandler = async (event) => {
@@ -36,7 +46,7 @@ const Login = (props) => {
     if(authenticated){
         console.log("trying to Redirect")
         return(
-            <Home/>
+            <Home message="Welcome [insert username here]"/>
         )
     }
     
