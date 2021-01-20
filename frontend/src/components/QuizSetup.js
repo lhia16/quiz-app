@@ -139,7 +139,7 @@ const QuizSetup = () => {
         return (
             <div>
 
-                <Timer/>
+                <Timer className="timer"/>
                 <Quiz questions={quizQuestions} shuffle={shuffle} />
 
 
