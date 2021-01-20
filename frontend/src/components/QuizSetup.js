@@ -79,8 +79,8 @@ const QuizSetup = () => {
     }
     if (!categorySelected) {
         return (
-            <div>
-                <h1>Quiz Setup</h1>
+            <div className="container">
+                <h1>Pick a category!</h1>
                 <div className="categories">
                     {
                         shuffle(categories).slice(0, 9).map((category, i) => {
