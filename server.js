@@ -29,15 +29,15 @@ app.use(cookieParser());
 app.use(cors());
 
 
-app.get('/', auth.isLoggedIn ,async (req, res) => {
+app.get('/', auth.isLoggedIn, async (req, res) => {
     // res.send("Hello from Nodejs");
-   console.log(req.user);
-    if(req.userFound && req.userFound.Admin) {
+    console.log(req.user);
+    if (req.userFound && req.userFound.Admin) {
         console.log("user is logged in")
     } else {
         console.log("you are a guest")
-    } 
-    
+    }
+
     const usersDB = await user.find();
 
     // res.render('index', {
@@ -52,7 +52,7 @@ app.get('/', auth.isLoggedIn ,async (req, res) => {
     })
 });
 
-app.get('/home', async (req,res) => {
+app.get('/home', async (req, res) => {
 
     const usersDB = await user.find();
     res.json({
@@ -61,8 +61,8 @@ app.get('/home', async (req,res) => {
 })
 
 app.post('/register', async (req, res) => {
-    console.log("req.body"); 
-//CHECK IF USER ALREADY REGISTERED EXIST - DO NOT REGISTER THE USER, OTHERWISE REGISTER NEW USER)
+    console.log("req.body");
+    //CHECK IF USER ALREADY REGISTERED EXIST - DO NOT REGISTER THE USER, OTHERWISE REGISTER NEW USER)
     const hashedPassword = await bcrypt.hash(req.body.password, 13)
 
     //this is where we can pass all the data to mongodb
@@ -107,11 +107,11 @@ app.post('/quizcomplete', async (req, res) => {
     })
 
 
-    const user = await User.findById(({_id:decoded.id}))
+    const user = await User.findById(({ _id: decoded.id }))
     let currentScore = user.totalScore;
     let currentTime = user.totalTime;
 
-    await User.findByIdAndUpdate({_id:decoded.id},{
+    await User.findByIdAndUpdate({ _id: decoded.id }, {
         totalTime: currentTime + req.body.time,
         totalScore: currentScore + req.body.score
     })
@@ -128,22 +128,33 @@ app.post('/quizcomplete', async (req, res) => {
 
 app.get("/isauthd", async (req, res) => {
     //this is where we can pass all the data to mongodb
-    try{
-    const token = req.cookies.jwt;
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    try {
+        const token = req.cookies.jwt;
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    const user = await User.findById(({_id:decoded.id}))
-    //always must send a response (send feed back to frontend - succes/failure)
-    res.json({
-        response: user,
-        authenticated: true
-    })}catch(error){
+        const user = await User.findById(({ _id: decoded.id }))
+        //always must send a response (send feed back to frontend - succes/failure)
+        res.json({
+            response: user,
+            authenticated: true
+        })
+    } catch (error) {
         res.json({
             response: "User is not logged in",
             authenticated: false
         })
     }
 });
+
+app.get("/logout", (req, res) => {
+    console.log("logging out");
+    authenticated = false;
+    res.cookie('jwt', { expires: 0 });
+    res.json({
+        response: "User has been logged out",
+    })
+});
+
 
 app.post('/login', async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
@@ -188,7 +199,7 @@ app.post("/quizsetup/category", async (req, res) => {
 
     //always must send a response (send feed back to frontend - succes/failure)
     res.json({
-        response:"You Selected: " + req.body.category
+        response: "You Selected: " + req.body.category
     })
 })
 
@@ -197,7 +208,7 @@ app.post("/quizsetup/difficulty", (req, res) => {
     console.log("difficulty");
     //always must send a response (send feed back to frontend - succes/failure)
     res.json({
-        response:"You Selected: " + req.body.difficulty
+        response: "You Selected: " + req.body.difficulty
     })
 })
 
@@ -206,7 +217,7 @@ app.post("/quiz", (req, res) => {
 
     //always must send a response (send feed back to frontend - succes/failure)
     res.json({
-        response:"You Selected: " + req.body.difficulty
+        response: "You Selected: " + req.body.difficulty
     })
 })
 
