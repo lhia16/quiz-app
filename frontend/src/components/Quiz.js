@@ -86,10 +86,10 @@ const Quiz = (props) => {
         let newArray = [props.questions[question].correct_answer, props.questions[question].incorrect_answers[0], props.questions[question].incorrect_answers[1], props.questions[question].incorrect_answers[2]];
         let shuffledArray = props.shuffle(newArray);
         return (
-            <div>
+            <div >
                 <h1>Question {question + 1}</h1>
-                {props.questions[question].question}
-                <form onSubmit={(e) => answerHandler(e)}>
+                <h2 className="question">{props.questions[question].question}</h2>
+                <form className="quiz" onSubmit={(e) => answerHandler(e)}>
                     <button value={shuffledArray[0]} onClick={(e) => { setAnswer(e.target.value) }}>{shuffledArray[0]}</button>
                     <button value={shuffledArray[1]} onClick={(e) => { setAnswer(e.target.value) }}>{shuffledArray[1]}</button>
                     <button value={shuffledArray[2]} onClick={(e) => { setAnswer(e.target.value) }}>{shuffledArray[2]}</button>
