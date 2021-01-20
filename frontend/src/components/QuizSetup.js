@@ -3,6 +3,8 @@ import Quiz from './Quiz';
 import Timer from './Timer';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import Login from './Login';
+
 
 const QuizSetup = () => {
 
@@ -14,6 +16,7 @@ const QuizSetup = () => {
     const [difficultySelected, setDifficultySelected] = useState(false);
     const [category, setCategory] = useState("");
     const [quizQuestions, setQuizQuestions] = useState([]);
+    const [authenticated, setAuthenticated] = useState(false);
 
 
     const fetchData = async () => {
@@ -22,8 +25,16 @@ const QuizSetup = () => {
         setCategories(response.data.trivia_categories);
     }
 
+    const checkAuth = async () => {
+        const response = await axios.get('/isAuthd')
+        console.log(response)
+        setAuthenticated(response.data.authenticated);
+
+    }
+
     //will run once when the page has loaded
     useEffect(() => {
+        checkAuth();
         fetchData();
     }, []);
 
@@ -77,6 +88,15 @@ const QuizSetup = () => {
 
         return array;
     }
+
+    console.log("user is authenticated:" + authenticated);
+    if(!authenticated){
+        return(
+            <Login message="Please log in to play"/>
+        )
+    }
+
+
     if (!categorySelected) {
         return (
             <div className="container">

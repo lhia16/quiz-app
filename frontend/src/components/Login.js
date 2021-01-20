@@ -1,13 +1,15 @@
 import './Login.css';
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import axios from 'axios';
+import Home from './Home';
 
 
-const Login = () => {
+const Login = (props) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [backendResponse, setbackendResponse] = useState("");
+    const [backendResponse, setbackendResponse] = useState();
+    const [authenticated, setAuthenticated] = useState();
 
 
     const formHandler = async (event) => {
@@ -27,10 +29,17 @@ const Login = () => {
         }
 
         const response = await axios.post("/login", body, config);
-
-        setbackendResponse(response.data.response);
+        console.log(response.data.authenticated);
+        setAuthenticated(response.data.authenticated)
     }
 
+    if(authenticated){
+        console.log("trying to Redirect")
+        return(
+            <Home/>
+        )
+    }
+    
     return (
         <div>
             <h1>Login</h1>
@@ -48,6 +57,7 @@ const Login = () => {
                 <button type="submit">Login</button>
             </form>
             {backendResponse}
+            {props.message}
         </div>
     );
 }

@@ -9,7 +9,7 @@ const User = require('./models/user');
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const cookieParser = require('cookie-parser');
-// const auth = require('./middlewares/auth');
+const auth = require('./middlewares/auth');
 const user = require('./models/user');
 const Result = require('./models/result');
 
@@ -25,12 +25,13 @@ mongoose.connect(process.env.DB_URL, {
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ extended: false }));
+app.use(cookieParser());
 app.use(cors());
 
 
-app.get('/', async (req, res) => {
+app.get('/', auth.isLoggedIn ,async (req, res) => {
     // res.send("Hello from Nodejs");
-   
+   console.log(req.user);
     if(req.userFound && req.userFound.Admin) {
         console.log("user is logged in")
     } else {
@@ -44,7 +45,20 @@ app.get('/', async (req, res) => {
     // });
 
     res.send("Hello from Nodejs");
+    console.log(usersDB);
+
+    res.json({
+        response: usersDB
+    })
 });
+
+app.get('/home', async (req,res) => {
+
+    const usersDB = await user.find();
+    res.json({
+        response: usersDB
+    })
+})
 
 app.post('/register', async (req, res) => {
     console.log("req.body"); 
@@ -88,6 +102,7 @@ app.post('/quizcomplete', async (req, res) => {
         score: req.body.score,
     })
 
+
     const user = await User.findById(({_id:"60000fbf7e42d612c87ca2d5"}))
     let currentScore = user.totalScore;
     let currentTime = user.totalTime;
@@ -107,6 +122,25 @@ app.post('/quizcomplete', async (req, res) => {
 //     res.render('login');
 // });
 
+app.get("/isauthd", async (req, res) => {
+    //this is where we can pass all the data to mongodb
+    try{
+    const token = req.cookies.jwt;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await User.findById(({_id:decoded.id}))
+    //always must send a response (send feed back to frontend - succes/failure)
+    res.json({
+        response: user,
+        authenticated: true
+    })}catch(error){
+        res.json({
+            response: "User is not logged in",
+            authenticated: false
+        })
+    }
+});
+
 app.post('/login', async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
     console.log(user);
@@ -119,16 +153,22 @@ app.post('/login', async (req, res) => {
         });
         console.log(token);
 
-        const cookiesOptions = {
+        const cookieOptions = {
             expires: new Date(
                 Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
             ),
             httpOnly: true
         }
         res.cookie('jwt', token, cookieOptions);
-        res.send("you are logged in");
+
+        res.json({
+            response: "Details match!",
+            authenticated: isMatch
+        })
     } else {
-        res.send("login details are incorrect");
+        res.json({
+            response: "Username or Password incorrect!"
+        })
     }
 });
 
