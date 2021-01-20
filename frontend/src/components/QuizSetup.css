@@ -4,15 +4,10 @@
     flex-wrap: wrap;
     margin: auto;
     width: 50%;
-    border: 3px solid green;
+    /* border: 3px solid green; */
     padding: 10px;
 }
-/* .container {
-    background-image: url(../images/blueGradient.png);
-    background-attachment: fixed;
-    
 
-} */
 .category{
     width: 33%;
     height: 200px;
@@ -36,9 +31,7 @@
     color: white;
     height: 100%;
     background-image: url(../images/blueGradient.png);
-    /* background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(113,9,121,1) 0%, rgba(0,212,255,1) 100%);
-    background-attachment: fixed;
-    */
+    
   }
    
 
@@ -57,12 +50,13 @@ h2 {
     width: 90%;
     padding: 10px;
     text-align: center;
+    
 }
 
 button {
     margin-top: 2px;
-    border-radius: 12px;
-    border: 2px;
+    /* border-radius: 12px;
+    border: 2px; */
     font-size: 30px;
     font-family: 'Kanit', sans-serif;
     color: white;
@@ -74,33 +68,24 @@ button {
     padding: 6px;
     outline: none;
     margin-top: 15px;
+    
 }
   
 button:hover {
-    background-color: rgb(109, 71, 169)
+    background: rgba(45, 44, 44, 0.1);
+    backdrop-filter: blur( 4.5px );
+    -webkit-backdrop-filter: blur( 4.5px );
 
 }
 
-li {
-    display: inline;
-    color: white;
-  
-   
+.difficulty {
+ 
+        margin: auto;
+        width: 100%;
+        /* border: 10px solid #73AD21; */
+        padding: 10px;
+        text-align: center;
+        height: 100%;
+
 }
 
-a:visited {
-    color: white
-}
-
-a:hover {
-    color: rgb(200, 199, 199);
-}
-
-a:link {
-    text-decoration: none;
-}
-
-li a {
-    padding: 10px;
-    
-}
