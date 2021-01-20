@@ -95,19 +95,23 @@ app.get("/getData", async (req, res) => {
 // });
 
 app.post('/quizcomplete', async (req, res) => {
+
+    const token = req.cookies.jwt;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
     await Result.create({
         //need to update this to get the proper data from the cookie?
-        user: "60000fbf7e42d612c87ca2d5",
+        user: decoded.id,
         time: req.body.time,
         score: req.body.score,
     })
 
 
-    const user = await User.findById(({_id:"60000fbf7e42d612c87ca2d5"}))
+    const user = await User.findById(({_id:decoded.id}))
     let currentScore = user.totalScore;
     let currentTime = user.totalTime;
 
-    await User.findByIdAndUpdate({_id:"60000fbf7e42d612c87ca2d5"},{
+    await User.findByIdAndUpdate({_id:decoded.id},{
         totalTime: currentTime + req.body.time,
         totalScore: currentScore + req.body.score
     })
