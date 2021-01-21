@@ -178,7 +178,8 @@ app.post('/login', async (req, res) => {
 
         res.json({
             response: "Details match!",
-            authenticated: isMatch
+            authenticated: isMatch,
+            user: user.name
         })
     } else {
         res.json({

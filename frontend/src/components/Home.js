@@ -21,7 +21,9 @@ const Home = (props) => {
     return (
         <div>
             <h1>Home Page</h1>
-            {props.message}
+            <h2>{props.message}</h2>
+            <p>Welcome to Quizify!</p>
+            <p>Take part in quizes to earn points and compete on the leaderboard</p>
         </div>
     );
 }

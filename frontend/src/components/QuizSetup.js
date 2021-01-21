@@ -22,6 +22,7 @@ const QuizSetup = () => {
     const fetchData = async () => {
         //body/headers not required when accessing own backend
         const response = await axios.get('https://opentdb.com/api_category.php')
+        console.log(response);
         setCategories(response.data.trivia_categories);
     }
 
