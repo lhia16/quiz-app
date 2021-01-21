@@ -52,9 +52,9 @@ const Register = () => {
     }
     
     return (
-        <div>
+        <div className="container">
             <h1>Register</h1>
-            <form onSubmit={formHandler}>
+            <form id="register" onSubmit={formHandler}>
                 
                 <label>User Name:</label><br />
                 <input type="text" name="userName" onChange={(e) => { setName(e.target.value) }}></input><br /><br />
@@ -65,7 +65,7 @@ const Register = () => {
                 <label>Password:</label><br></br>
                 <input type="password" name="userPassword" onChange={(e) => { setPassword(e.target.value) }}></input><br /><br />
 
-                <button type="submit">Register</button>
+                <button id="registerbtn" type="submit">Register</button>
             </form>
             {backendResponse}
         </div>
