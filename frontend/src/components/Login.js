@@ -39,14 +39,14 @@ const Login = (props) => {
         }
 
         const response = await axios.post("/login", body, config);
-        console.log(response.data.authenticated);
+        console.log("look here:" + response.data);
         setAuthenticated(response.data.authenticated)
     }
 
     if(authenticated){
         console.log("trying to Redirect")
         return(
-            <Home message="Welcome [insert username here]"/>
+            <Home message="Welcome to Quizify"/>
         )
     }
     

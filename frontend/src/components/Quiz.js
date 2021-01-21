@@ -1,7 +1,7 @@
 import './Quiz.css';
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 const Quiz = (props) => {
 
@@ -30,6 +30,10 @@ const Quiz = (props) => {
 
         return score;
     }
+
+    const onSubmit = () => {
+            return  <Redirect  to="/quizsetup" />
+     }
 
     const sendData = async (score, totalTime) => {
 
@@ -79,7 +83,10 @@ const Quiz = (props) => {
             <div>
                 <h1>Quiz complete here are your results!</h1>
                 <h2>You scored: {score} out of 100</h2>
-                <button><Link to="/leaderboard">Leaderboard</Link></button>
+                <div className="buttons">
+                <button id="leaderboard"><Link to="/leaderboard">Leaderboard</Link></button>
+                <button id="playagain"><Link to="/quizsetup">Play Again</Link></button>
+                </div>
             </div>
         )
     } else {

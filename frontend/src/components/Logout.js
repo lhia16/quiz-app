@@ -18,7 +18,8 @@ const Logout = () => {
 
     return (
         <div>
-            <h1>LogOut</h1>
+            <h1>Logged Out Succesfully</h1>
+            <h2>Thanks for playing!</h2>
         </div>
     );
 }

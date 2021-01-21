@@ -20,3 +20,14 @@
     padding-bottom: 30px;
 }
 
+
+.buttons{
+    text-align: center;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h2{
+    font-size: 40px;
+}
