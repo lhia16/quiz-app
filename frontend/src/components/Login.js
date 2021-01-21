@@ -53,7 +53,7 @@ const Login = (props) => {
     return (
         <div>
             <h1>Login</h1>
-            <form className="form" onSubmit={formHandler}>
+            <form id="login" className="form" onSubmit={formHandler}>
                 
                 <label>User Name:</label><br />
                 <input type="text" name="userName" onChange={(e) => { setName(e.target.value) }}></input><br /><br />
@@ -64,10 +64,10 @@ const Login = (props) => {
                 <label>Password:</label><br></br>
                 <input type="password" name="userPassword" onChange={(e) => { setPassword(e.target.value) }}></input><br /><br />
 
-                <button type="submit">Login</button>
+                <button id="loginbtn" type="submit">Login</button>
             </form>
-            {backendResponse}
-            {props.message}
+            <h2 class="response">{backendResponse}</h2>
+            <h2 class="response">{props.message}</h2>
         </div>
     );
 }
