@@ -20,10 +20,10 @@ const Quiz = (props) => {
     const checkAnswers = (answers) => {
         let score = 0;
         props.questions.map((q, i) => {
-            if(q.correct_answer === answers[i]){
+            if (q.correct_answer === answers[i]) {
                 console.log("correct");
                 score += 10;
-            }else{
+            } else {
                 console.log("The correct answer is " + q.correct_answer);
             }
         })
@@ -31,9 +31,20 @@ const Quiz = (props) => {
         return score;
     }
 
-    const onSubmit = () => {
-            return  <Redirect  to="/quizsetup" />
-     }
+    //function that fixes html codes in strings and returns the parsed string
+    const fixString = (string) => {
+        if (string.includes("&#039;")) {
+            string = string.replaceAll("&#039;", "'")
+        }
+        if (string.includes("&quot;")) {
+            string = string.replaceAll("&quot;", "\"")
+        }
+        if (string.includes("&amp;")) {
+            string = string.replaceAll("&amp;", "&")
+        }
+        console.log(string);
+        return string;
+    }
 
     const sendData = async (score, totalTime) => {
 
@@ -72,35 +83,36 @@ const Quiz = (props) => {
         let array = timer[0].innerHTML.split(":");
         console.log(array);
 
-        let totalTime = parseInt(array[0]*60) + parseInt(array[1])
+        let totalTime = parseInt(array[0] * 60) + parseInt(array[1])
         console.log(totalTime);
 
         //convert in seconds
         sendData(score, totalTime);
-        
+
 
         return (
             <div>
                 <h1>Quiz complete here are your results!</h1>
                 <h2>You scored: {score} out of 100</h2>
                 <div className="buttons">
-                <button id="leaderboard"><Link to="/leaderboard">Leaderboard</Link></button>
-                <button id="playagain"><Link to="/quizsetup">Play Again</Link></button>
+                    <button id="leaderboard"><Link to="/leaderboard">Leaderboard</Link></button>
+                    <button id="playagain"><Link to="/quizsetup">Play Again</Link></button>
                 </div>
             </div>
         )
     } else {
         let newArray = [props.questions[question].correct_answer, props.questions[question].incorrect_answers[0], props.questions[question].incorrect_answers[1], props.questions[question].incorrect_answers[2]];
         let shuffledArray = props.shuffle(newArray);
+
         return (
             <div >
                 <h1>Question {question + 1}</h1>
-                <h2 className="question">{props.questions[question].question}</h2>
+                <h2 className="question">{fixString(props.questions[question].question)}</h2>
                 <form className="quiz" onSubmit={(e) => answerHandler(e)}>
-                    <button value={shuffledArray[0]} onClick={(e) => { setAnswer(e.target.value) }}>{shuffledArray[0]}</button>
-                    <button value={shuffledArray[1]} onClick={(e) => { setAnswer(e.target.value) }}>{shuffledArray[1]}</button>
-                    <button value={shuffledArray[2]} onClick={(e) => { setAnswer(e.target.value) }}>{shuffledArray[2]}</button>
-                    <button value={shuffledArray[3]} onClick={(e) => { setAnswer(e.target.value) }}>{shuffledArray[3]}</button>
+                    <button value={shuffledArray[0]} onClick={(e) => { setAnswer(e.target.value) }}>{fixString(shuffledArray[0])}</button>
+                    <button value={shuffledArray[1]} onClick={(e) => { setAnswer(e.target.value) }}>{fixString(shuffledArray[1])}</button>
+                    <button value={shuffledArray[2]} onClick={(e) => { setAnswer(e.target.value) }}>{fixString(shuffledArray[2])}</button>
+                    <button value={shuffledArray[3]} onClick={(e) => { setAnswer(e.target.value) }}>{fixString(shuffledArray[3])}</button>
                 </form>
             </div>
         )
