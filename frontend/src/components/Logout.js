@@ -1,20 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import './Logout.css';
-import axios from 'axios';
 
-const Logout = () => {
+const Logout = (props) => {
 
-    const [response, setResponse] = useState([]);
+    const logOut = () => {
+      props.setAuthenticated(false)
+    }
 
-    useEffect(() => {
-        const logOut = async () => {
-          const response = await axios.get("/logout")
-          setResponse(response.data);
-
-        }
-        
-        logOut();
-      }, [])
+    logOut();
 
     return (
         <div>
