@@ -47,9 +47,9 @@ app.get('/', auth.isLoggedIn, async (req, res) => {
     res.send("Hello from Nodejs");
     console.log(usersDB);
 
-    res.json({
-        response: usersDB
-    })
+    // res.json({
+    //     response: usersDB
+    // })
 });
 
 app.get('/home', async (req, res) => {
