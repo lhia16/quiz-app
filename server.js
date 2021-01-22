@@ -26,7 +26,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
-
+// ... other app.use middleware 
+app.use(express.static(path.join(__dirname, "../build")))
 
 app.get('/', async (req, res) => {
     // res.send("Hello from Nodejs");
@@ -195,6 +196,10 @@ app.post("/quiz", (req, res) => {
         response: "You Selected: " + req.body.difficulty
     })
 })
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../build"))
+});
 
 app.listen(port, () => {
     console.log(`Listening to port ${port}`);
