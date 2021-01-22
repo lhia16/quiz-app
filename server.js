@@ -9,7 +9,6 @@ const User = require('./models/user');
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const cookieParser = require('cookie-parser');
-const auth = require('./middlewares/auth');
 const user = require('./models/user');
 const Result = require('./models/result');
 
@@ -29,7 +28,7 @@ app.use(cookieParser());
 app.use(cors());
 
 
-app.get('/', auth.isLoggedIn, async (req, res) => {
+app.get('/', async (req, res) => {
     // res.send("Hello from Nodejs");
     console.log(req.user);
     if (req.userFound && req.userFound.Admin) {
@@ -119,31 +118,6 @@ app.post('/quizcomplete', async (req, res) => {
     res.json({
         response: "Score registered Succesfully!"
     })
-});
-
-
-// app.get("/login", (req, res) => {
-//     res.render('login');
-// });
-
-app.get("/isauthd", async (req, res) => {
-    //this is where we can pass all the data to mongodb
-    try {
-        const token = req.cookies.jwt;
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-        const user = await User.findById(({ _id: decoded.id }))
-        //always must send a response (send feed back to frontend - succes/failure)
-        res.json({
-            response: user,
-            authenticated: true
-        })
-    } catch (error) {
-        res.json({
-            response: "User is not logged in",
-            authenticated: false
-        })
-    }
 });
 
 app.get("/logout", (req, res) => {
