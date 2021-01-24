@@ -73,7 +73,7 @@ app.post('/register', async (req, res) => {
     })
     //always must send a response (send feed back to frontend - succes/failure)
     res.json({
-        response: "User registered Succesfully!"
+        response: "User registered Successfully!"
     })
 });
 
@@ -117,7 +117,7 @@ app.post('/quizcomplete', async (req, res) => {
     })
     //always must send a response (send feed back to frontend - succes/failure)
     res.json({
-        response: "Score registered Succesfully!"
+        response: "Score registered Successfully!"
     })
 });
 
@@ -165,7 +165,7 @@ app.post('/login', async (req, res) => {
 
 //always must send a response (send feed back to frontend - succes/failure)
 //     res.json({
-//         response:"User login Succesfully!"
+//         response:"User login Successfully!"
 //     })
 // });
 

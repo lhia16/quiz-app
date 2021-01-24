@@ -1,7 +1,8 @@
 import './Quiz.css';
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
+import QuizSetup from './QuizSetup';
 
 const Quiz = (props) => {
 
@@ -96,7 +97,7 @@ const Quiz = (props) => {
                 <h2>You scored: {score} out of 100</h2>
                 <div className="buttons">
                     <button id="leaderboard"><Link to="/leaderboard">Leaderboard</Link></button>
-                    <button id="playagain"><Link to="/quizsetup">Play Again</Link></button>
+                    <button id="playAgain"><Link to="/quizsetup">Play Again</Link></button>
                 </div>
             </div>
         )
