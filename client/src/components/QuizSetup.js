@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import Login from './Login';
 
 
-const QuizSetup = () => {
+const QuizSetup = (props) => {
 
     const [categories, setCategories] = useState([]);
     const [difficulty, setDifficulty] = useState(["easy", "medium", "hard"]);
@@ -16,7 +16,7 @@ const QuizSetup = () => {
     const [difficultySelected, setDifficultySelected] = useState(false);
     const [category, setCategory] = useState("");
     const [quizQuestions, setQuizQuestions] = useState([]);
-    const [authenticated, setAuthenticated] = useState(false);
+   
 
 
     const fetchData = async () => {
@@ -26,16 +26,9 @@ const QuizSetup = () => {
         setCategories(response.data.trivia_categories);
     }
 
-    const checkAuth = async () => {
-        const response = await axios.get('/isAuthd')
-        console.log(response)
-        setAuthenticated(response.data.authenticated);
-
-    }
 
     //will run once when the page has loaded
     useEffect(() => {
-        checkAuth();
         fetchData();
     }, []);
 
@@ -90,10 +83,10 @@ const QuizSetup = () => {
         return array;
     }
 
-    console.log("user is authenticated:" + authenticated);
-    if(!authenticated){
+    console.log("user is authenticated:" + props.authenticated);
+    if(!props.authenticated){
         return(
-            <Login message="Please log in to play"/>
+            <Login authenticated={props.authenticated} message="Please log in to play"/>
         )
     }
 

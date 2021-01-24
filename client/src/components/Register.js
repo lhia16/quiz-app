@@ -1,34 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import './Register.css';
-import Home from './Home';
+import Login from './Login';
+
 
 const Register = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [backendResponse, setbackendResponse] = useState("");
-    const [authenticated, setAuthenticated] = useState();
-
-    useEffect(() => {
-        checkAuth();
-    }, []);
-
-    const checkAuth = async () => {
-        const response = await axios.get('/isAuthd')
-        console.log(response)
-        setAuthenticated(response.data.authenticated);
-
-    }
-
-    if(authenticated){
-        console.log("trying to Redirect")
-        return(
-            <Home message="you are already registered!"/>
-        )
-    }
-
-
+   
 
     const formHandler = async (event) => {
         event.preventDefault();
@@ -49,6 +30,12 @@ const Register = () => {
         const response = await axios.post("/register", body, config);
 
         setbackendResponse(response.data.response);
+    }
+
+    if(backendResponse === "User registered Successfully!"){
+        return(
+            <Login authenticated={false} message="Registered Successfully, Please Log in!"/>
+        )
     }
     
     return (

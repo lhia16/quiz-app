@@ -1,25 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './Nav.css';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 
-const Nav = () => {
-        const [authenticated, setAuthenticated] = useState(false);
 
-        //will run once when the page has loaded
-        useEffect(() => {
-
-                const checkAuth = async () => {
-                        const response = await axios.get('/isAuthd')
-                        console.log(response)
-                        setAuthenticated(response.data.authenticated);
-        
-                }
-
-                checkAuth();
-        }, []);
-
-        if(authenticated){
+const Nav = (props) => {
+       if(props.authenticated){
                 return(
                         <nav>
                         <ul>
