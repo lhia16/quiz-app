@@ -27,7 +27,7 @@ app.use(express.json({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 // ... other app.use middleware 
-app.use(express.static(path.join(__dirname, "../build")))
+app.use(express.static(path.join(__dirname, "./client/build")))
 
 app.get('/', async (req, res) => {
     // res.send("Hello from Nodejs");
@@ -252,7 +252,7 @@ app.post("/quiz", (req, res) => {
 })
 
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../build"))
+    res.sendFile(path.join(__dirname, "./client/build"))
 });
 
 app.listen(port, () => {
