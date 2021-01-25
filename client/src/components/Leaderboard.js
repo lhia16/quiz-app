@@ -4,14 +4,11 @@ import axios from "axios";
 
 const Leaderboard = (props) => {
 
-  const [scores, setScores] = useState([]);
   const [sortedScores, setsortedScores] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get("/getData")
-      setScores(response.data.results);
-  
+      const response = await axios.get("/getData")  
       orderScores(response.data.results);
     }
   
@@ -33,7 +30,6 @@ const Leaderboard = (props) => {
   //Take the data from state and store it in a variable so that I can manipulate it
   //I use this new sorted value and set it to state ready for the render
 
-  console.log(sortedScores);
   return (
     <div className="main">
       <h1>Leaderboard</h1>
@@ -43,7 +39,7 @@ const Leaderboard = (props) => {
       <h2>Score</h2>
       <h2>Time</h2>
       </div>
-      {scores.map((person, i) => {
+      {sortedScores.map((person, i) => {
         return (
           <div key={i} className="result">
             <p className="name">

@@ -31,7 +31,6 @@ app.use(express.static(path.join(__dirname, "../build")))
 
 app.get('/', async (req, res) => {
     // res.send("Hello from Nodejs");
-    console.log(req.user);
     if (req.userFound && req.userFound.Admin) {
         console.log("user is logged in")
     } else {
@@ -45,7 +44,6 @@ app.get('/', async (req, res) => {
     // });
 
     res.send("Hello from Nodejs");
-    console.log(usersDB);
 
     // res.json({
     //     response: usersDB
@@ -60,9 +58,27 @@ app.get('/home', async (req, res) => {
     })
 })
 
-app.post('/register', async (req, res) => {
+app.get("/isauthd", async (req, res) => {
+    //this is where we can pass all the data to mongodb
+    try {
+        const token = req.cookies.jwt;
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    console.log(req.body.password, req.body.passwordConfirm)
+        const user = await User.findById(({ _id: decoded.id }))
+        //always must send a response (send feed back to frontend - succes/failure)
+        res.json({
+            response: user,
+            authenticated: true
+        })
+    } catch (error) {
+        res.json({
+            response: "User is not logged in",
+            authenticated: false
+        })
+    }
+});
+
+app.post('/register', async (req, res) => {
     try {
         const user = await User.findOne({ email: req.body.email });
         if (user) {
@@ -106,7 +122,6 @@ app.post('/register', async (req, res) => {
 app.get("/getData", async (req, res) => {
     //this is where we can pass all the data to mongodb
     const results = await User.find()
-    console.log(results);
     //always must send a response (send feed back to frontend - succes/failure)
     res.json({
         results: results
@@ -141,7 +156,6 @@ app.post('/quizcomplete', async (req, res) => {
 });
 
 app.get("/logout", (req, res) => {
-    console.log("logging out");
     authenticated = false;
     res.cookie('jwt', { expires: 0 });
     res.json({
@@ -151,7 +165,6 @@ app.get("/logout", (req, res) => {
 
 
 app.post('/login', async (req, res) => {
-    console.log(req.body.name, req.body.email, req.body.password);
 
     if (req.body.password === null || req.body.password === "") {
         res.json({
@@ -176,7 +189,6 @@ app.post('/login', async (req, res) => {
                 const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
                     expiresIn: process.env.JWT_EXPIRES_IN
                 });
-                console.log(token);
 
                 const cookieOptions = {
                     expires: new Date(
@@ -202,7 +214,6 @@ app.post('/login', async (req, res) => {
                 response: "Username or Password incorrect!"
             })
         }
-        console.log(user);
         // console.log(req.body.name, req.body.email, req.body.password);
     }
 });
@@ -225,7 +236,6 @@ app.post("/quizsetup/category", async (req, res) => {
 
 app.post("/quizsetup/difficulty", (req, res) => {
     //this is where we can pass all the data to mongodb
-    console.log("difficulty");
     //always must send a response (send feed back to frontend - succes/failure)
     res.json({
         response: "You Selected: " + req.body.difficulty

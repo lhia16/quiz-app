@@ -9,28 +9,26 @@ import Login from './Login';
 const QuizSetup = (props) => {
 
     const [categories, setCategories] = useState([]);
-    const [difficulty, setDifficulty] = useState(["easy", "medium", "hard"]);
+    const [difficulty] = useState(["easy", "medium", "hard"]);
     const [selectedDifficulty, setSelectedDifficulty] = useState("");
     const [backendResponse, setbackendResponse] = useState("");
     const [categorySelected, setCategorySelected] = useState(false);
     const [difficultySelected, setDifficultySelected] = useState(false);
     const [category, setCategory] = useState("");
     const [quizQuestions, setQuizQuestions] = useState([]);
-   
-
-
-    const fetchData = async () => {
-        //body/headers not required when accessing own backend
-        const response = await axios.get('https://opentdb.com/api_category.php')
-        console.log(response);
-        setCategories(response.data.trivia_categories);
-    }
-
 
     //will run once when the page has loaded
     useEffect(() => {
+        const fetchData = async () => {
+            //body/headers not required when accessing own backend
+            if (props.authenticated) {
+                const response = await axios.get('https://opentdb.com/api_category.php')
+                console.log(response);
+                setCategories(response.data.trivia_categories);
+            }
+        }
         fetchData();
-    }, []);
+    },[]);
 
     const formHandler = async (event, page) => {
         //this prevents the reloading of the page
@@ -40,6 +38,7 @@ const QuizSetup = (props) => {
         } else if (page === "difficulty") {
             setDifficultySelected(true);
             const response = await axios.get(`https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${selectedDifficulty}&type=multiple`)
+            setbackendResponse(backendResponse);
             setQuizQuestions(response.data.results);
         }
 
@@ -83,10 +82,9 @@ const QuizSetup = (props) => {
         return array;
     }
 
-    console.log("user is authenticated:" + props.authenticated);
-    if(!props.authenticated){
-        return(
-            <Login authenticated={props.authenticated} message="Please log in to play"/>
+    if (!props.authenticated) {
+        return (
+            <Login authenticated={props.authenticated} message="Please log in to play" />
         )
     }
 
@@ -133,7 +131,7 @@ const QuizSetup = (props) => {
         return (
             <div>
 
-                <Timer className="timer"/>
+                <Timer className="timer" />
                 <Quiz questions={quizQuestions} shuffle={shuffle} />
 
 
