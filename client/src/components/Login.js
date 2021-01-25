@@ -29,6 +29,7 @@ const Login = (props) => {
         }
 
         const response = await axios.post("/login", body, config);
+        setbackendResponse(response.data.response);
         console.log(response.data);
         if (response.data.authenticated) {
             props.setAuthenticated(response.data.authenticated);

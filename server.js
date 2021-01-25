@@ -61,20 +61,46 @@ app.get('/home', async (req, res) => {
 })
 
 app.post('/register', async (req, res) => {
-    console.log("req.body");
-    //CHECK IF USER ALREADY REGISTERED EXIST - DO NOT REGISTER THE USER, OTHERWISE REGISTER NEW USER)
-    const hashedPassword = await bcrypt.hash(req.body.password, 13)
 
-    //this is where we can pass all the data to mongodb
-    await User.create({
-        name: req.body.name,
-        email: req.body.email,
-        password: hashedPassword,
-    })
-    //always must send a response (send feed back to frontend - succes/failure)
-    res.json({
-        response: "User registered Successfully!"
-    })
+    console.log(req.body.password, req.body.passwordConfirm)
+    try {
+        const user = await User.findOne({ email: req.body.email });
+        if (user) {
+            res.json({
+                response: "Email address already exists."
+            })
+        } else {
+            if (req.body.password === null || req.body.password === "") {
+                res.json({
+                    response: "Please enter a valid password!"
+                })
+            } else if (req.body.name === null || req.body.name === "") {
+                res.json({
+                    response: "Please enter a valid username!"
+                })
+            } else if (req.body.password !== req.body.passwordConfirm) {
+                res.json({
+                    response: "Passwords do not match!"
+                })
+            } else {
+                //CHECK IF USER ALREADY REGISTERED EXIST - DO NOT REGISTER THE USER, OTHERWISE REGISTER NEW USER)
+                const hashedPassword = await bcrypt.hash(req.body.password, 13)
+
+                //this is where we can pass all the data to mongodb
+                await User.create({
+                    name: req.body.name,
+                    email: req.body.email,
+                    password: hashedPassword,
+                })
+                //always must send a response (send feed back to frontend - succes/failure)
+                res.json({
+                    response: "User registered Successfully!"
+                })
+            }
+        }
+    } catch (error) {
+        console.log(error);
+    }
 });
 
 app.get("/getData", async (req, res) => {
@@ -86,13 +112,6 @@ app.get("/getData", async (req, res) => {
         results: results
     })
 });
-
-
-
-
-// app.get("/login", (req, res) => {
-//     res.render('login');
-// });
 
 app.post('/quizcomplete', async (req, res) => {
 
@@ -132,34 +151,59 @@ app.get("/logout", (req, res) => {
 
 
 app.post('/login', async (req, res) => {
-    const user = await User.findOne({ email: req.body.email });
-    console.log(user);
-    // console.log(req.body.name, req.body.email, req.body.password);
-    const isMatch = await bcrypt.compare(req.body.password, user.password);
+    console.log(req.body.name, req.body.email, req.body.password);
 
-    if (isMatch) {
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-            expiresIn: process.env.JWT_EXPIRES_IN
-        });
-        console.log(token);
-
-        const cookieOptions = {
-            expires: new Date(
-                Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
-            ),
-            httpOnly: true
-        }
-        res.cookie('jwt', token, cookieOptions);
-
+    if (req.body.password === null || req.body.password === "") {
         res.json({
-            response: "Details match!",
-            authenticated: isMatch,
-            user: user.name
+            response: "Please enter a valid password!"
         })
+    } else if (req.body.name === null || req.body.name === "") {
+        res.json({
+            response: "Please enter a valid username!"
+        })
+
+    } else if (req.body.email === null || req.body.email === "") {
+        res.json({
+            response: "Please enter a valid Email address!"
+        })
+
     } else {
-        res.json({
-            response: "Username or Password incorrect!"
-        })
+        try {
+            const user = await User.findOne({ email: req.body.email });
+            const isMatch = await bcrypt.compare(req.body.password, user.password);
+
+            if (isMatch) {
+                const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+                    expiresIn: process.env.JWT_EXPIRES_IN
+                });
+                console.log(token);
+
+                const cookieOptions = {
+                    expires: new Date(
+                        Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000
+                    ),
+                    httpOnly: true
+                }
+                res.cookie('jwt', token, cookieOptions);
+
+                res.json({
+                    response: "Details match!",
+                    authenticated: isMatch,
+                    user: user.name
+                })
+            } else {
+                res.json({
+                    response: "Username or Password incorrect!"
+                })
+            }
+        }
+        catch (error) {
+            res.json({
+                response: "Username or Password incorrect!"
+            })
+        }
+        console.log(user);
+        // console.log(req.body.name, req.body.email, req.body.password);
     }
 });
 

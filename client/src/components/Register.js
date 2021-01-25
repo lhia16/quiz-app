@@ -8,6 +8,7 @@ const Register = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [passwordConfirm, setPasswordConfirm] = useState("");
     const [backendResponse, setbackendResponse] = useState("");
    
 
@@ -19,6 +20,7 @@ const Register = () => {
             name: name,
             email: email,
             password: password,
+            passwordConfirm: passwordConfirm,
         }
 
         const config = {
@@ -47,14 +49,17 @@ const Register = () => {
                 <input type="text" name="userName" onChange={(e) => { setName(e.target.value) }}></input><br /><br />
 
                 <label>Email:</label><br />
-                <input type="text" name="userEmail" onChange={(e) => { setEmail(e.target.value) }}></input><br /><br />
+                <input type="email" name="userEmail" onChange={(e) => { setEmail(e.target.value) }}></input><br /><br />
 
                 <label>Password:</label><br></br>
                 <input type="password" name="userPassword" onChange={(e) => { setPassword(e.target.value) }}></input><br /><br />
 
+                <label>Password Confirm:</label><br></br>
+                <input type="password" name="userPasswordConfirm" onChange={(e) => { setPasswordConfirm(e.target.value) }}></input><br /><br />
+
                 <button id="registerbtn" type="submit">Register</button>
             </form>
-            {backendResponse}
+            <h2>{backendResponse}</h2>
         </div>
     );
 }
