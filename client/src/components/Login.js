@@ -1,5 +1,5 @@
 import './Login.css';
-import React, { useState, useEffect} from 'react';
+import React, { useState} from 'react';
 import axios from 'axios';
 import Home from './Home';
 
@@ -14,8 +14,6 @@ const Login = (props) => {
 
     const formHandler = async (event) => {
         event.preventDefault();
-        console.log("Form Submitted");
-        console.log(name, email, password);
         const body = {
             name: name,
             email: email,
@@ -30,13 +28,11 @@ const Login = (props) => {
 
         const response = await axios.post("/login", body, config);
         setbackendResponse(response.data.response);
-        console.log(response.data);
         if (response.data.authenticated) {
             props.setAuthenticated(response.data.authenticated);
         }
     }
     if(props.authenticated){
-        console.log("trying to Redirect")
         return(
             <Home />
         )
