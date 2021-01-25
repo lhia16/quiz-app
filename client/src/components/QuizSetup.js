@@ -16,19 +16,21 @@ const QuizSetup = (props) => {
     const [difficultySelected, setDifficultySelected] = useState(false);
     const [category, setCategory] = useState("");
     const [quizQuestions, setQuizQuestions] = useState([]);
+   
+
+
+    const fetchData = async () => {
+        //body/headers not required when accessing own backend
+        const response = await axios.get('https://opentdb.com/api_category.php')
+        console.log(response);
+        setCategories(response.data.trivia_categories);
+    }
+
 
     //will run once when the page has loaded
     useEffect(() => {
-        const fetchData = async () => {
-            //body/headers not required when accessing own backend
-            if (props.authenticated) {
-                const response = await axios.get('https://opentdb.com/api_category.php')
-                console.log(response);
-                setCategories(response.data.trivia_categories);
-            }
-        }
         fetchData();
-    },[]);
+    }, []);
 
     const formHandler = async (event, page) => {
         //this prevents the reloading of the page
@@ -82,9 +84,9 @@ const QuizSetup = (props) => {
         return array;
     }
 
-    if (!props.authenticated) {
-        return (
-            <Login authenticated={props.authenticated} message="Please log in to play" />
+    if(!props.authenticated){
+        return(
+            <Login authenticated={props.authenticated} message="Please log in to play"/>
         )
     }
 
@@ -131,7 +133,7 @@ const QuizSetup = (props) => {
         return (
             <div>
 
-                <Timer className="timer" />
+                <Timer className="timer"/>
                 <Quiz questions={quizQuestions} shuffle={shuffle} />
 
 
