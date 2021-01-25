@@ -86,17 +86,22 @@ app.post('/register', async (req, res) => {
                 response: "Email address already exists."
             })
         } else {
-            if (req.body.password === null || req.body.password === "") {
+            if (req.body.password === null || req.body.password === "" || req.body.password.trim() === "") {
                 res.json({
                     response: "Please enter a valid password!"
                 })
-            } else if (req.body.name === null || req.body.name === "") {
+            } else if (req.body.name === null || req.body.name === "" || req.body.password.trim() === "") {
                 res.json({
                     response: "Please enter a valid username!"
                 })
             } else if (req.body.password !== req.body.passwordConfirm) {
                 res.json({
                     response: "Passwords do not match!"
+                })
+            }
+            else if (req.body.email === null || req.body.email === "" || req.body.email.trim() === "") {
+                res.json({
+                    response: "Please enter a valid email address!"
                 })
             } else {
                 //CHECK IF USER ALREADY REGISTERED EXIST - DO NOT REGISTER THE USER, OTHERWISE REGISTER NEW USER)
