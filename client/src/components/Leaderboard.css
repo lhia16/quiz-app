@@ -1,34 +1,52 @@
-.result{
-    display: flex;
-    width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-    border: solid 1px black;
-    border-radius: 5px;    
-    margin-bottom: 4px;
-    background: rgba( 155, 155, 155, 0.10 );
-    backdrop-filter: blur( 4.5px );
-    -webkit-backdrop-filter: blur( 4.5px );
-    border-radius: 10px;
-    border: 1px solid rgba( 255, 255, 255, 0.18 );
-    transition: all 0.3s ease-out;
+.result {
+  display: flex;
+  width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  border: solid 1px black;
+  border-radius: 5px;
+  margin-bottom: 4px;
+  background: rgba(155, 155, 155, 0.1);
+  backdrop-filter: blur(4.5px);
+  -webkit-backdrop-filter: blur(4.5px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transition: all 0.3s ease-out;
 }
 
 .result:hover {
-    transform: translateY(-2px) scale(1.005) translateZ(0);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.11),
-      0 6px 9px var(--card-hover);
-  }
-
-.result p{
-    text-align: center;
-    width: 250px;
+  transform: translateY(-2px) scale(1.005) translateZ(0);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.11), 0 6px 9px var(--card-hover);
 }
 
-.titles{
-    
-    display: flex;
-    width: 700px;
+.result p {
+  text-align: center;
+  width: 250px;
+}
+
+.titles {
+  display: flex;
+  width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media only screen and (max-width: 600px) {
+  .result {
+    width: 80%;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .titles {
+    width: 70vw;
+  }
+
+  .titles h2 {
+    font-size: large;
+  }
+
+  .result p {
+    font-size: small;
+  }
 }

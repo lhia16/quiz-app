@@ -101,3 +101,31 @@ button:hover {
     font-size: xx-large;
 }
 
+@media only screen and (max-width: 600px) {
+    h1{
+        font-size: x-large;
+    }
+
+    .categories {
+        /* width: 700px; */
+        display: flex;
+        flex-wrap: wrap;
+        margin: auto;
+        width: 95%;
+        /* border: 3px solid green; */
+        padding: 10px;
+    }
+
+
+    .category{
+            width: 33%;
+            height: 70px;
+        }
+
+        .category button{
+            font-size: 2.5vw;
+        }
+        
+    }
+
+  
