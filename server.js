@@ -50,13 +50,21 @@ app.get('/', async (req, res) => {
     // })
 });
 
-app.get('/home', async (req, res) => {
+app.get('/login', async (req, res) => {
+    res.send("This is the login page");
+});
 
-    const usersDB = await user.find();
-    res.json({
-        response: usersDB
-    })
-})
+app.get('/quizsetup', async (req, res) => {
+    res.send("This is the quiz setup page");
+});
+
+app.get('/register', async (req, res) => {
+    res.send("This is the register page");
+});
+
+app.get('/leaderboard', async (req, res) => {
+    res.send("This is the leaderboard page");
+});
 
 app.get("/isauthd", async (req, res) => {
     //this is where we can pass all the data to mongodb
