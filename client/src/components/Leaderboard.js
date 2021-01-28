@@ -32,7 +32,7 @@ const Leaderboard = (props) => {
 
   return (
     <div className="main">
-      <h1>Leaderboard</h1>
+      <h1>Leaderboard - Top 10</h1>
       {/* Map through the already sorted array that lives in state */}
       <div className="titles">
       <h2>Name</h2>
@@ -40,6 +40,7 @@ const Leaderboard = (props) => {
       <h2>Time</h2>
       </div>
       {sortedScores.map((person, i) => {
+        if(i <= 9){
         return (
           <div key={i} className="result">
             <p className="name">
@@ -53,6 +54,7 @@ const Leaderboard = (props) => {
             </p>
           </div>
         );
+        }
       })}
     </div>
   )
