@@ -36,6 +36,9 @@ const Quiz = (props) => {
 
     //function that fixes html codes in strings and returns the parsed string
     const fixString = (string) => {
+        if(string.includes("&rsquo;")){
+            string = string.replaceAll("&rsquo;", "'")
+        }
         if (string.includes("&#039;")) {
             string = string.replaceAll("&#039;", "'")
         }
@@ -92,7 +95,6 @@ const Quiz = (props) => {
         //convert in seconds
         sendData(score, totalTime);
 
-
         return (
             <div>
                 <h1>Quiz complete here are your results!</h1>
@@ -112,10 +114,10 @@ const Quiz = (props) => {
                 <h1>Question {question + 1}</h1>
                 <h2 className="question">{fixString(props.questions[question].question)}</h2>
                 <form className="quiz" onSubmit={(e) => answerHandler(e)}>
-                    <button value={shuffledArray[0]} onClick={(e) => { setAnswer(e.target.value) }}>{fixString(shuffledArray[0])}</button>
-                    <button value={shuffledArray[1]} onClick={(e) => { setAnswer(e.target.value) }}>{fixString(shuffledArray[1])}</button>
-                    <button value={shuffledArray[2]} onClick={(e) => { setAnswer(e.target.value) }}>{fixString(shuffledArray[2])}</button>
-                    <button value={shuffledArray[3]} onClick={(e) => { setAnswer(e.target.value) }}>{fixString(shuffledArray[3])}</button>
+                    <button className="answer" value={shuffledArray[0]} onClick={(e) => { setAnswer(e.target.value) }}>{fixString(shuffledArray[0])}</button>
+                    <button className="answer" value={shuffledArray[1]} onClick={(e) => { setAnswer(e.target.value) }}>{fixString(shuffledArray[1])}</button>
+                    <button className="answer" value={shuffledArray[2]} onClick={(e) => { setAnswer(e.target.value) }}>{fixString(shuffledArray[2])}</button>
+                    <button className="answer" value={shuffledArray[3]} onClick={(e) => { setAnswer(e.target.value) }}>{fixString(shuffledArray[3])}</button>
                 </form>
             </div>
         )

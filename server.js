@@ -98,7 +98,7 @@ app.post('/register', async (req, res) => {
                 res.json({
                     response: "Please enter a valid password!"
                 })
-            } else if (req.body.name === null || req.body.name === "" || req.body.password.trim() === "") {
+            } else if (req.body.name === null || req.body.name === "" || req.body.name.trim() === "") {
                 res.json({
                     response: "Please enter a valid username!"
                 })
