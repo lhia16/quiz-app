@@ -40,6 +40,7 @@ const Leaderboard = (props) => {
       <h2>Time</h2>
       </div>
       {sortedScores.map((person, i) => {
+        let formattedTime = new Date(person.totalScore * 1000).toISOString().substr(11, 8);
         if(i <= 9){
         return (
           <div key={i} className="result">
@@ -50,7 +51,7 @@ const Leaderboard = (props) => {
               {person.totalScore}
             </p>
             <p className="totalTime">
-              {person.totalTime}
+              {formattedTime}
             </p>
           </div>
         );

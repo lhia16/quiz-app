@@ -1,38 +1,54 @@
-#container{
-    height: 100%
+#container {
+  height: 100%;
 }
 
-#login{
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: auto;
-    margin-right: auto;
-    width: 400px;
+#login {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: auto;
+  margin-right: auto;
+  width: 400px;
 }
 
-#login label{
-    width: 100%;
+#login label {
+  width: 100%;
 }
 
-#login input{
-    width: 100%;
-    border: none;
-    font-size: 100%;
-    font-family: "Kanit", sans-serif;
-    background: rgba(75, 75, 75, 0.1);
-    backdrop-filter: blur( 4.5px );
-    -webkit-backdrop-filter: blur( 4.5px );
-    border-radius: 10px;
-    border: 1px solid rgba( 255, 255, 255, 0.18 );
-    color: white;
-  }
+#login input {
+  width: 100%;
+  border: none;
+  font-size: 100%;
+  font-family: "Kanit", sans-serif;
+  background: rgba(75, 75, 75, 0.1);
+  backdrop-filter: blur(4.5px);
+  -webkit-backdrop-filter: blur(4.5px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: white;
+}
 
 input:focus {
-    outline-width: 0;
+  outline-width: 0;
 }
 
-#loginbtn{
+#loginbtn {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active  {
+  transition: background-color 5000s;
+  -webkit-text-fill-color: #fff !important;
+}
+
+@media only screen and (max-width: 600px) {
+  #login {
     margin-left: auto;
     margin-right: auto;
-    margin-top: 20px;
+    width: 100%;
+  }
 }

@@ -39,6 +39,9 @@ const Quiz = (props) => {
         if(string.includes("&rsquo;")){
             string = string.replaceAll("&rsquo;", "'")
         }
+        if(string.includes("&ndash;")){
+            string = string.replaceAll("&ndash;", "-")
+        }
         if (string.includes("&#039;")) {
             string = string.replaceAll("&#039;", "'")
         }
