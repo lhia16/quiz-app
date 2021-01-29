@@ -1,24 +1,27 @@
+ul {
+  padding: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 li {
-    display: inline;
-    color: white;
-  
-   
+  display: inline;
+  color: white;
 }
 
 a:visited {
-    color: white
+  color: white;
 }
 
 a:hover {
-    color: rgb(200, 199, 199);
+  color: rgb(200, 199, 199);
 }
 
 a:link {
-    text-decoration: none;
-    color: white;
+  text-decoration: none;
+  color: white;
 }
 
 li a {
-    padding: 10px;
-    
+  padding: 10px;
 }
