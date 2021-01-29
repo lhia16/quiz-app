@@ -101,8 +101,8 @@ const Quiz = (props) => {
         return (
             <div>
                 <h1>Quiz complete here are your results!</h1>
-                <h2>You scored: {score} out of 100</h2>
-                <div className="buttons">
+                <h2 className="score">You scored: {score} out of 100</h2>
+                <div className="buttonsComplete">
                     <button id="leaderboard"><Link to="/leaderboard">Leaderboard</Link></button>
                     <button id="playAgain" onClick={() => window.location.reload()}><Link to="/quizsetup">Play Again</Link></button>
                 </div>

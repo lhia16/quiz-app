@@ -21,7 +21,7 @@
   text-align: center;
 }
 
-.buttons {
+.buttonsComplete {
   text-align: center;
   width: 500px;
   margin-left: auto;
@@ -33,6 +33,24 @@ h2 {
 }
 
 @media only screen and (max-width: 600px) {
+
+  .score{
+    font-size: x-large;
+  }
+
+  .buttonsComplete{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #leaderboard{
+    width: 100%;
+  }
+  #playAgain{
+    width: 100%;
+  }
+
   .quiz {
     text-align: center;
     height: 500px;
@@ -52,3 +70,5 @@ h2 {
     margin:10px
   }
 }
+
+
